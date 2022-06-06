@@ -7,35 +7,34 @@
 >
   <LeftImage srcImage="../src/assets/logo_login.svg" />
   <div
-    class="bg-white flex flex-col mx-auto col-span-1 md:col-span-2  content-center justify-center  w-9/12"
+    class="bg-white gap-10 flex flex-col mx-auto col-span-1 md:col-span-2  content-center justify-center  w-9/12"
   >
     <div>
-      <p class="text-center text-4xl my-12  font-bold text-black">
+      <p class="text-center text-5xl font-bold text-black">
         Registro de usuarios
       </p>
     </div>
 
-    <p class="text-center  font-bold text-black">
+    <p class="text-center text-xl font-semibold text-black">
       Seleccione el tipo de usuario a registrar
     </p>
-
     <div
-      class="mt-8 flex flex-col mx-auto  content-center justify-center w-8/12 text-black"
+      class="flex gap-3 flex-col mx-auto content-center justify-center w-8/12 text-black"
     >
       <a
-        class="bg-blue-300 drop-shadow-md duration-500 hover:bg-blue-400 font-bold py-2 px-4 text-center hover:text-black hover:no-underline rounded focus:outline-none focus:shadow-outline"
+        class="bg-blue-300 text-lg drop-shadow-md duration-500 hover:bg-blue-400 font-normal py-2 px-4 text-center hover:text-black hover:no-underline rounded focus:outline-none focus:shadow-outline"
         href="/register/admin"
       >
         Administrador
       </a>
       <a
-        class="my-3 bg-blue-300 drop-shadow-md duration-500 hover:bg-blue-400 font-bold py-2 px-4 text-center hover:text-black hover:no-underline rounded focus:outline-none focus:shadow-outline"
+        class="bg-blue-300 text-lg drop-shadow-md duration-500 hover:bg-blue-400 font-normal py-2 px-4 text-center hover:text-black hover:no-underline rounded focus:outline-none focus:shadow-outline"
         href="/register/doctor"
       >
         Medico
       </a>
       <a
-        class="bg-blue-300 drop-shadow-md duration-500 hover:bg-blue-400 font-bold py-2 px-4 text-center hover:text-black  hover:no-underline rounded focus:outline-none focus:shadow-outline"
+        class="bg-blue-300 text-lg drop-shadow-md duration-500 hover:bg-blue-400 font-normal py-2 px-4 text-center hover:text-black  hover:no-underline rounded focus:outline-none focus:shadow-outline"
         href="/register/patient"
       >
         Paciente
