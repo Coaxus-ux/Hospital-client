@@ -6,7 +6,7 @@
 <div
   class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-rows-1 grid-flow-row w-auto h-screen"
 >
-  <LeftImage srcImage="./assets/logo_login.svg" />
+  <LeftImage srcImage="../src/assets/logo_register.svg" />
   <div
     class="bg-white flex flex-col mx-auto col-span-1 md:col-span-2  content-center justify-center  w-9/12"
   >
@@ -183,7 +183,7 @@
           id="confirmPasswordInput"
           type="password"
           placeholder="Contraseña"
-          class="my-3 bg-slate-50 w-full lg:w-60 rounded mt-0  border-slate-200 focus:outline-none"
+          class="my-3 bg-slate-50 w-full lg:w-60 rounded mt-0 h-10 p-2 border-slate-200 focus:outline-none"
         />
       </div>
     </div>

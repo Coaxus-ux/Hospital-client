@@ -5,7 +5,7 @@
 <div
   class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-rows-1 grid-flow-row w-auto h-screen"
 >
-  <LeftImage srcImage="./assets/logo_login.svg" />
+  <LeftImage srcImage="../src/assets/logo_login.svg" />
   <div
     class="bg-white flex flex-col mx-auto col-span-1 md:col-span-2  content-center justify-center  w-9/12"
   >
