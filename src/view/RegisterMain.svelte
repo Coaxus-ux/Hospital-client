@@ -7,7 +7,7 @@
 >
   <LeftImage srcImage="../src/assets/logo_login.svg" />
   <div
-    class="bg-white gap-10 flex flex-col mx-auto col-span-1 md:col-span-2  content-center justify-center  w-9/12"
+    class="bg-white gap-10 flex flex-col mx-auto col-span-1 md:col-span-2 align-middle content-center justify-center w-9/12 "
   >
     <div>
       <p class="text-center text-5xl font-bold text-black">

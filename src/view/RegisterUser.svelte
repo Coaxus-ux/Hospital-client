@@ -1,6 +1,18 @@
 <script>
+  import { writable } from "svelte/store";
+
   import LeftImage from "../lib/LeftImage.svelte";
   export let typeUser;
+  const User = writable({
+    name: "",
+    lastName: "",
+    birthDate: "",
+    citizenshipCard: "",
+    emploeeId: "",
+    email: "",
+    password: ""
+  });
+  console.log($User);
 </script>
 
 <div
@@ -41,12 +53,14 @@
           type="text"
           placeholder="Nombre"
           class="my-3 bg-slate-50 w-full h-10 p-2 rounded mt-0 border-slate-200 focus:outline-none"
+          bind:value={$User.name}
         />
       </div>
       <div class="flex-col flex flex-1 gap-2">
         <label
           for="lastNameInput"
           class="text-md font-semibold text-black leading-5 "
+          
         >
           Apellido
         </label>
@@ -55,6 +69,7 @@
           type="text"
           placeholder="Apellido"
           class="my-3 bg-slate-50 w-full h-10 p-2 rounded mt-0  border-slate-200 focus:outline-none"
+          bind:value={$User.lastName}
         />
       </div>
     </div>
@@ -74,6 +89,7 @@
             id="birthDateInput"
             type="date"
             class="my-3 w-full h-10 p-2 bg-slate-50 rounded mt-0 border-slate-200 focus:outline-none"
+            bind:value={$User.birthDate}
           />
         {/if}
         {#if typeUser === "admin" || typeUser === "doctor"}

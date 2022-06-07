@@ -1,24 +1,41 @@
 <script>
   import LeftImage from "../lib/LeftImage.svelte";
   import { writable } from "svelte/store";
-  import { userLogin } from "../store/loginUser.js";
+  import { userLogin } from "../store/Login.js";
+  import { navigate } from "svelte-routing";
+  import { fade } from "svelte/transition";
 
- 
-
-  let userData = writable({
+  let User = writable({
     email: "",
     password: "",
+    remeberMe: false,
   });
   let error = writable(false);
+  let errorNoActive = writable(false);
   const handleClick = async () => {
     const emailRegex = new RegExp(
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
     );
-    if (emailRegex.test($userData.email) && $userData.password.length > 0) {
-      const login = await userLogin($userData);
-      console.log("eso", login)
-
+    if (emailRegex.test($User.email) && $User.password.length > 0) {
+      const response = await userLogin($User);
+      console.log(response);
+      if (response.hasOwnProperty("token")) {
+        error.set(false);
+        if($User.remeberMe){
+          localStorage.setItem("user", JSON.stringify(response));
+        }
+        navigate("/");
+      } else if (response.msg === "User not confirmed") {
+        
+        errorNoActive.set(true);
+      } else {
+        error.set(true);
+      }
     }
+    setTimeout(() => {
+      error.set(false);
+      errorNoActive.set(false);
+    }, 3000);
   };
 </script>
 
@@ -36,15 +53,22 @@
     </div>
     {#if $error}
       <div
-        class="bg-red-200 uppercase flex items-center justify-center font-semibold rounded-lg mx-6 my-7 h-12"
+        class="bg-red-200 uppercase flex items-center justify-center font-semibold rounded-lg mx-6 my-7 h-12 text-center"
+        transition:fade
       >
         Correo o Contraseña incorrectos
       </div>
     {/if}
-    <form>
+    {#if $errorNoActive}
       <div
-        class="w-full flex flex-col justify-center gap-2 mb-5"
+        class="bg-orange-200 uppercase flex items-center justify-center font-semibold rounded-lg mx-6 my-7 h-12 text-center"
+        transition:fade
       >
+        Cuenta no activada
+      </div>
+    {/if}
+    <form>
+      <div class="w-full flex flex-col justify-center gap-2 mb-5">
         <label
           for="emailInput"
           class="text-md ml-2 font-semibold text-black leading-5"
@@ -54,14 +78,12 @@
         <input
           id="emailInput"
           type="email"
-          bind:value={$userData.email}
+          bind:value={$User.email}
           placeholder="ejemplo@mail.com"
           class="focus:ring-blue-400 focus:ring-2 my-3 w-full bg-slate-50 h-10 p-2 rounded mt-0  border-slate-200 focus:outline-none"
         />
       </div>
-      <div
-        class="w-full gap-2 flex flex-col justify-center"
-      >
+      <div class="w-full gap-2 flex flex-col justify-center">
         <label
           for="passwordInput"
           class="text-md ml-2 font-semibold text-black leading-5"
@@ -71,7 +93,7 @@
         <input
           id="passwordInput"
           type="password"
-          bind:value={$userData.password}
+          bind:value={$User.password}
           placeholder="Contraseña"
           class="focus:ring-blue-400 focus:ring-2 my-3 w-full bg-slate-50 h-10 p-2 rounded mt-0  border-slate-200 focus:outline-none"
         />
@@ -84,11 +106,15 @@
             id="remember"
             aria-describedby="remember"
             type="checkbox"
+            bind:checked={$User.remeberMe}
             class="cursor-pointer bg-gray-300 border border-gray-400 focus:ring-3 focus:ring-emerald-500 h-4 w-4 rounded"
           />
         </div>
         <div class="text-sm ml-3">
-          <label for="remember" class="font-medium text-gray-900"
+          <label 
+            for="remember" 
+            class="font-medium text-gray-900"
+
             >Recordardarme</label
           >
         </div>
