@@ -3,6 +3,7 @@
   import Login from "./view/Login.svelte";
   import RegisterMain from "./view/RegisterMain.svelte";
   import RegisterUser from "./view/RegisterUser.svelte";
+  import ActivateAccount from "./view/activateAccount.svelte";
   import "./app.css";
 </script>
 
@@ -11,5 +12,6 @@
     <Route path="/login"><Login /></Route>
     <Route path="/register"><RegisterMain /></Route>
     <Route path="/register/:typeUser" let:params><RegisterUser typeUser="{params.typeUser}" /></Route>
+    <Route path="/activateAccount"><ActivateAccount /></Route>
   </Router>
 </div>

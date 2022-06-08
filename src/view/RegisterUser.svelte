@@ -1,18 +1,92 @@
 <script>
   import { writable } from "svelte/store";
-
+  import { fade } from "svelte/transition";
+  import { navigate } from "svelte-routing";
   import LeftImage from "../lib/LeftImage.svelte";
+  import { registerUser } from "../store/Auth.js";
   export let typeUser;
   const User = writable({
     name: "",
     lastName: "",
     birthDate: "",
     citizenshipCard: "",
+    phoneNumber: "",
     emploeeId: "",
     email: "",
-    password: ""
+    password: "",
+    repeatPassword: "",
+    typeUser: typeUser,
   });
-  console.log($User);
+
+  const Error = writable({
+    errorState: false,
+    errorMessage: "",
+  });
+  const handleClick = async () => {
+    const emailRegex = new RegExp(
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+    );
+
+    if (!emailRegex.test($User.email)) {
+      Error.set({
+        errorState: true,
+        errorMessage: "Email no valido",
+      });
+    }
+    if ($User.password.length < 6) {
+      Error.set({
+        errorState: true,
+        errorMessage: "Contraseña no valida",
+      });
+    }
+    if ($User.password !== $User.repeatPassword) {
+      Error.set({
+        errorState: true,
+        errorMessage: "Contraseñas no coinciden",
+      });
+    }
+    if (typeUser === "admin" || typeUser === "doctor") {
+      if ($User.emploeeId === "") {
+        Error.set({
+          errorState: true,
+          errorMessage: "Todos los campos son obligatorios",
+        });
+      }
+    }
+    if (
+      $User.name === "" ||
+      $User.lastName === "" ||
+      $User.citizenshipCard === "" ||
+      $User.email === "" ||
+      $User.password === "" ||
+      $User.repeatPassword === ""
+    ) {
+      Error.set({
+        errorState: true,
+        errorMessage: "Todos los campos son obligatorios",
+      });
+    }
+    if (!$Error.errorState) {
+      $User.citizenshipCard = $User.citizenshipCard.toString();
+      $User.phoneNumber = $User.phoneNumber.toString();
+      const response = await registerUser($User);
+      console.log(response);
+      if(!response.state){
+        Error.set({
+          errorState: true,
+          errorMessage: response.msg,
+        });
+      }else{
+        navigate("/activateAccount");
+      }
+    }
+    setTimeout(() => {
+      Error.set({
+        errorState: false,
+        errorMessage: "",
+      });
+    }, 3000);
+  };
 </script>
 
 <div
@@ -37,7 +111,14 @@
         Registro de doctor
       </p>
     {/if}
-
+    {#if $Error.errorState}
+      <div
+        class="bg-rose-500 uppercase flex items-center justify-center font-semibold rounded-lg mx-6 my-7 h-12 text-center"
+        transition:fade
+      >
+        {$Error.errorMessage}
+      </div>
+    {/if}
     <div
       class="block gap-10 lg:flex justify-between focus-within:ring-blue-400"
     >
@@ -60,7 +141,6 @@
         <label
           for="lastNameInput"
           class="text-md font-semibold text-black leading-5 "
-          
         >
           Apellido
         </label>
@@ -103,6 +183,7 @@
             id="nitInput"
             type="text"
             placeholder="Nit de empleado"
+            bind:value={$User.emploeeId}
             class="my-3 w-full h-10 p-2 bg-slate-50 rounded mt-0 border-slate-200 focus:outline-none"
           />
         {/if}
@@ -119,6 +200,7 @@
           id="ccInput"
           type="number"
           placeholder="Cedula"
+          bind:value={$User.citizenshipCard}
           class="my-3 bg-slate-50 h-10 p-2 w-full rounded mt-0 border-slate-200 focus:outline-none"
         />
       </div>
@@ -137,6 +219,7 @@
           id="emailInput"
           type="text"
           placeholder="ejemplo@mail.com"
+          bind:value={$User.email}
           class="my-3 w-full bg-slate-50 h-10 p-2 rounded mt-0  border-slate-200 focus:outline-none"
         />
       </div>
@@ -156,6 +239,7 @@
             id="emailInput"
             type="text"
             placeholder="ejemplo@mail.com"
+            bind:value={$User.email}
             class="my-3 w-full bg-slate-50 h-10 p-2 rounded mt-0  border-slate-200 focus:outline-none"
           />
         </div>
@@ -171,6 +255,7 @@
             id="phoneInput"
             type="number"
             placeholder="Numero de telefono"
+            bind:value={$User.phoneNumber}
             class="my-3 bg-slate-50 w-full rounded mt-0 h-10 p-2 border-slate-200 focus:outline-none"
           />
         </div>
@@ -191,6 +276,7 @@
           id="password"
           type="password"
           placeholder="Contraseña"
+          bind:value={$User.password}
           class="my-3 bg-slate-50 w-full rounded mt-0 h-10 p-2 border-slate-200 focus:outline-none"
         />
       </div>
@@ -205,6 +291,7 @@
           id="confirmPasswordInput"
           type="password"
           placeholder="Contraseña"
+          bind:value={$User.repeatPassword}
           class="my-3 bg-slate-50 w-full rounded mt-0 h-10 p-2 border-slate-200 focus:outline-none"
         />
       </div>
@@ -215,6 +302,7 @@
       <button
         class="bg-blue-300 drop-shadow-md duration-500 hover:bg-blue-400 font-semibold py-2 px-4  rounded focus:outline-none focus:shadow-outline"
         type="button"
+        on:click={handleClick}
       >
         Registrarme
       </button>

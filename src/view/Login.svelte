@@ -1,7 +1,7 @@
 <script>
   import LeftImage from "../lib/LeftImage.svelte";
   import { writable } from "svelte/store";
-  import { userLogin } from "../store/Login.js";
+  import { userLogin } from "../store/Auth.js";
   import { navigate } from "svelte-routing";
   import { fade } from "svelte/transition";
 
@@ -12,6 +12,11 @@
   });
   let error = writable(false);
   let errorNoActive = writable(false);
+  let errorNoUser = writable(false);
+  let Error = writable({
+    errorState: false,
+    errorMessage: "",
+  });
   const handleClick = async () => {
     const emailRegex = new RegExp(
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
@@ -20,21 +25,32 @@
       const response = await userLogin($User);
       console.log(response);
       if (response.hasOwnProperty("token")) {
-        error.set(false);
-        if($User.remeberMe){
+        if ($User.remeberMe) {
           localStorage.setItem("user", JSON.stringify(response));
         }
-        navigate("/");
+        navigate("/"+response.userType);
       } else if (response.msg === "User not confirmed") {
-        
-        errorNoActive.set(true);
+        Error.set({
+          errorState: true,
+          errorMessage: "Cuenta no activada",
+        });
+      } else if (response.msg === "User not found") {
+        Error.set({
+          errorState: true,
+          errorMessage: "Usuario no existe",
+        });
       } else {
-        error.set(true);
+        Error.set({
+          errorState: true,
+          errorMessage: "Correo o Contraseña incorrectos",
+        });
       }
     }
     setTimeout(() => {
-      error.set(false);
-      errorNoActive.set(false);
+      Error.set({
+        errorState: false,
+        errorMessage: "",
+      });
     }, 3000);
   };
 </script>
@@ -51,22 +67,15 @@
         Iniciar sesión
       </p>
     </div>
-    {#if $error}
+    {#if $Error.errorState}
       <div
-        class="bg-red-200 uppercase flex items-center justify-center font-semibold rounded-lg mx-6 my-7 h-12 text-center"
+        class="bg-rose-500 uppercase flex items-center justify-center font-semibold rounded-lg mx-6 my-7 h-12 text-center"
         transition:fade
       >
-        Correo o Contraseña incorrectos
+        {$Error.errorMessage}
       </div>
     {/if}
-    {#if $errorNoActive}
-      <div
-        class="bg-orange-200 uppercase flex items-center justify-center font-semibold rounded-lg mx-6 my-7 h-12 text-center"
-        transition:fade
-      >
-        Cuenta no activada
-      </div>
-    {/if}
+   
     <form>
       <div class="w-full flex flex-col justify-center gap-2 mb-5">
         <label
@@ -111,10 +120,7 @@
           />
         </div>
         <div class="text-sm ml-3">
-          <label 
-            for="remember" 
-            class="font-medium text-gray-900"
-
+          <label for="remember" class="font-medium text-gray-900"
             >Recordardarme</label
           >
         </div>
