@@ -4,22 +4,19 @@
   import { userLogin } from "../store/Auth.js";
   import { navigate } from "svelte-routing";
   import { fade } from "svelte/transition";
-
+  
   let User = writable({
     email: "",
     password: "",
     remeberMe: false,
   });
-  let error = writable(false);
-  let errorNoActive = writable(false);
-  let errorNoUser = writable(false);
   let Error = writable({
     errorState: false,
     errorMessage: "",
   });
   const handleClick = async () => {
     const emailRegex = new RegExp(
-      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
     if (emailRegex.test($User.email) && $User.password.length > 0) {
       const response = await userLogin($User);

@@ -5,6 +5,19 @@
   import LeftImage from "../lib/LeftImage.svelte";
   import { registerUser } from "../store/Auth.js";
   export let typeUser;
+  import Modal, { bind } from "svelte-simple-modal";
+  // @ts-ignore
+  import Popup from "../lib/Popup.svelte";
+  const modal = writable(null);
+
+  const showModal = () =>
+    modal.set(
+      bind(Popup, {
+        message:
+          "Se te envio un correo, por favor revisa tu bandeja de entrada para activar tu cuenta",
+        route: "/register",
+      })
+    );
   const User = writable({
     name: "",
     lastName: "",
@@ -23,10 +36,13 @@
     errorMessage: "",
   });
   const handleClick = async () => {
+    
+    $User.citizenshipCard = $User.citizenshipCard.toString();
+    $User.phoneNumber = $User.phoneNumber.toString();
+    $User.email = $User.email.toLocaleLowerCase().trim();
     const emailRegex = new RegExp(
-      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
-
     if (!emailRegex.test($User.email)) {
       Error.set({
         errorState: true,
@@ -67,17 +83,15 @@
       });
     }
     if (!$Error.errorState) {
-      $User.citizenshipCard = $User.citizenshipCard.toString();
-      $User.phoneNumber = $User.phoneNumber.toString();
       const response = await registerUser($User);
       console.log(response);
-      if(!response.state){
+      if (!response.state) {
         Error.set({
           errorState: true,
           errorMessage: response.msg,
         });
-      }else{
-        navigate("/activateAccount");
+      } else {
+        showModal();
       }
     }
     setTimeout(() => {
@@ -89,6 +103,15 @@
   };
 </script>
 
+<Modal
+  closeOnOuterClick={false}
+  closeButton={false}
+  show={$modal}
+  styleWindow={{
+    boxShadow: "0 2px 5px 0 rgba(0, 0, 0, 0.15 )",
+    backgroundColor: "rgb(241, 245, 249)",
+  }}
+/>
 <div
   class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-rows-1 grid-flow-row w-auto h-screen"
 >
