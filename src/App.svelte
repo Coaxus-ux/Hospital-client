@@ -11,7 +11,7 @@
   <Router>
     <Route path="/login"><Login /></Route>
     <Route path="/register"><RegisterMain /></Route>
-    <Route path="/register/:typeUser" let:params><RegisterUser typeUser="{params.typeUser}" /></Route>
-    <Route path="/activate-account"><ActivateAccount /></Route>
+    <Route path="/register/:typeUser" let:params> <RegisterUser typeUser="{params.typeUser}" /> </Route>
+    <Route path="/activate-account/:token" let:params> <ActivateAccount token="{params.token}" /> </Route>
   </Router>
 </div>
