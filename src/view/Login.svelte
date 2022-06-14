@@ -4,7 +4,11 @@
   import { userLogin } from "../store/Auth.js";
   import { navigate } from "svelte-routing";
   import { fade } from "svelte/transition";
-  
+  import { loggedValidator} from "../lib/loggedValidator";
+  import { onMount } from "svelte";
+  onMount(async () => {
+      await loggedValidator();
+    });
   let User = writable({
     email: "",
     password: "",
@@ -20,11 +24,8 @@
     );
     if (emailRegex.test($User.email) && $User.password.length > 0) {
       const response = await userLogin($User);
-      console.log(response);
       if (response.hasOwnProperty("token")) {
-        if ($User.remeberMe) {
-          localStorage.setItem("user", JSON.stringify(response));
-        }
+        localStorage.setItem("user", JSON.stringify(response));
         navigate("/"+response.userType);
       } else if (response.msg === "User not confirmed") {
         Error.set({
@@ -105,29 +106,13 @@
         />
       </div>
     </form>
-    <div class="flex items-start  mx-3">
-      <div class="flex center">
-        <div class="flex items-center">
-          <input
-            id="remember"
-            aria-describedby="remember"
-            type="checkbox"
-            bind:checked={$User.remeberMe}
-            class="cursor-pointer bg-gray-300 border border-gray-400 focus:ring-3 focus:ring-emerald-500 h-4 w-4 rounded"
-          />
-        </div>
-        <div class="text-sm ml-3">
-          <label for="remember" class="font-medium text-gray-900"
-            >Recordardarme</label
-          >
-        </div>
-      </div>
+ 
       <a
         href="/register"
         class="text-sm text-blue-500 ml-auto hover:text-blue-600"
         >Olvidé mi Contraseña</a
       >
-    </div>
+ 
     <div
       class="flex flex-col mx-auto  content-center justify-center w-8/12 text-black mt-5"
     >

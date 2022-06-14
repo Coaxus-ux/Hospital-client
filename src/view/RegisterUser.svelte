@@ -1,7 +1,6 @@
 <script>
   import { writable } from "svelte/store";
   import { fade } from "svelte/transition";
-  import { navigate } from "svelte-routing";
   import LeftImage from "../lib/LeftImage.svelte";
   import { registerUser } from "../store/Auth.js";
   export let typeUser;
@@ -36,25 +35,28 @@
     errorMessage: "",
   });
   const handleClick = async () => {
-    
     $User.citizenshipCard = $User.citizenshipCard.toString();
-    $User.phoneNumber = $User.phoneNumber.toString();
     $User.email = $User.email.toLocaleLowerCase().trim();
     const emailRegex = new RegExp(
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
+    const passwordRegex = new RegExp(
+      /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/
+    );
+    
     if (!emailRegex.test($User.email)) {
       Error.set({
         errorState: true,
         errorMessage: "Email no valido",
       });
     }
-    if ($User.password.length < 6) {
+    if (!passwordRegex.test($User.password)) {
       Error.set({
         errorState: true,
-        errorMessage: "Contraseña no valida",
+        errorMessage: "Contraseña no valida, debe tener minimo 8 y maximo 16 caracteres, una mayuscula y un numero",
       });
     }
+    
     if ($User.password !== $User.repeatPassword) {
       Error.set({
         errorState: true,
@@ -63,6 +65,28 @@
     }
     if (typeUser === "admin" || typeUser === "doctor") {
       if ($User.emploeeId === "") {
+        Error.set({
+          errorState: true,
+          errorMessage: "Todos los campos son obligatorios",
+        });
+      }
+      if($User.emploeeId.toString().length < 9){
+      Error.set({
+        errorState: true,
+        errorMessage: "El nit de empleado debe tener 9 caracteres",
+      });
+    }
+    }
+    if( typeUser === "patient" || typeUser === "doctor"){
+      if($User.phoneNumber === ""){
+        Error.set({
+          errorState: true,
+          errorMessage: "Todos los campos son obligatorios",
+        });
+      }
+    }
+    if(typeUser === "patient"){
+      if($User.birthDate === ""){
         Error.set({
           errorState: true,
           errorMessage: "Todos los campos son obligatorios",
@@ -84,11 +108,10 @@
     }
     if (!$Error.errorState) {
       const response = await registerUser($User);
-      console.log(response);
       if (!response.state) {
         Error.set({
           errorState: true,
-          errorMessage: response.msg,
+          errorMessage: response,
         });
       } else {
         showModal();
@@ -204,7 +227,7 @@
           </label>
           <input
             id="nitInput"
-            type="text"
+            type="number"
             placeholder="Nit de empleado"
             bind:value={$User.emploeeId}
             class="my-3 w-full h-10 p-2 bg-slate-50 rounded mt-0 border-slate-200 focus:outline-none"

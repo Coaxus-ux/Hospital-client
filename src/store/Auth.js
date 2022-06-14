@@ -54,3 +54,17 @@ export const validateUser = async (token) => {
   return response;
 
 }
+export const JWTValidator = async (jwtToken) => {
+  const response = fetch(`${ENV_OBJ.API_REST_URL}/user/JWTValidator/${jwtToken}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    }
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      return res;
+    }
+    );
+  return response;
+}

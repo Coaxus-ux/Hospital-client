@@ -39,6 +39,12 @@
       >
         Paciente
       </a>
+      <a
+        class="my-2 bg-gray-300 drop-shadow-md duration-500 hover:bg-gray-400 font-semibold py-2 px-5 text-center hover:text-black hover:no-underline rounded focus:outline-none focus:shadow-outline"
+        href="/login"
+      >
+        Volver
+      </a>
     </div>
   </div>
 </div>
