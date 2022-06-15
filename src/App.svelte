@@ -7,12 +7,14 @@
   import Admin from "./view/Admin.svelte";
   import Doctor from "./view/Doctor.svelte";
   import Patient from "./view/Patient.svelte";
+  import Home from "./view/Home.svelte";
   import "./app.css";
 
 </script>
 
 <div>
   <Router>
+    <Route path="/"><Home /></Route>
     <Route path="/login"><Login /></Route>
     <Route path="/register"><RegisterMain /></Route>
     <Route path="/register/:typeUser" let:params> <RegisterUser typeUser="{params.typeUser}" /> </Route>
