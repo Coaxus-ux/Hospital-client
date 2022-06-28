@@ -1,218 +1,110 @@
-<div class="App">
-  <header>
-    <nav
-      class="flex gap-10 flex-col md:flex-row p-8 bg-[#F6F8FB] justify-around items-center"
-    >
-      <div class="flex flex-col md:flex-row gap-10">
-        <p class="bg-blue-300 p-2 px-10 rounded-lg text-white font-semibold">
-          MyHospital
+<script>
+  import { setContext } from "svelte";
+  import Header from "../lib/Header.svelte";
+  import Footer from "../lib/Footer.svelte";
+</script>
+
+<Header />
+<div class="bg-[#F1F1F1]">
+  <main
+    class="flex justify-between bg-[url('../src/assets/stethoscope.svg')] bg-no-repeat px-3 mx-5"
+  >
+    <div class=" m-auto ">
+      <h1 class="text-6xl font-extrabold">
+        Salud de calidad, soluciones y cuidados para todo el mundo
+      </h1>
+      <div class="pt-10 ">
+        <p class="text-lg opacity-75 font-medium">
+          Nostros estamos disponibles 24/7 para ti, estamos enfocados en tu
+          bienestar
+        </p>
+        <p class="text-lg opacity-75 font-medium ">
+          Puedes pedir una cita con nosotros en cualquien momento
         </p>
       </div>
-      <div class="flex gap-10 items-center">
-        <button>🛎️</button>
-        <img
-          src="https://avatars.dicebear.com/api/miniavs/.svg"
-          class="w-12 border rounded-full"
-          alt=""
-        />
-      </div>
-    </nav>
-    <nav
-      class="flex flex-col md:flex-row bg-[#F6F8FB] font-semibold p-5 justify-center items-center gap-5"
-    >
-      <a href="/">Panel principal</a>
-      <a href="/">Mis citas</a>
-      <a href="/" class="hidden md:block"> | </a>
-      <a href="/">Servicio al cliente</a>
-      <a href="/">Ayuda</a>
-    </nav>
-  </header>
-
-  <div class="flex flex-wrap overflow-hidden max-w-screen-2xl mx-auto">
-    <div class="w-full overflow-hidden lg:w-1/2 max-h-96 ">
-      <img
-        src="../src/assets/homeimg2.jpg"
-        alt="ImageHospitalHome"
-        class="object-cover"
-      />
-    </div>
-
-    <div
-      class="w-full overflow-hidden lg:w-1/2 flex flex-col bg-[#3CB4E5] p-10 md:max-h-96 "
-    >
-      <p class="text-4xl font-semibold text-white py-2">MyHospital</p>
-      <p class="text-white">
-        En muchos países, los hospitales son gratuitos para las personas que no
-        tienen otra forma de pagar la atención que necesitan. En algunos casos,
-        el gobierno paga el tratamiento hospitalario de las personas. Algunas
-        personas pueden tener su propio seguro y obtener cobertura para su
-        estadía en el hospital, pero otras tendrán que hacer un reclamo más
-        tarde a las compañías de seguros privadas o al gobierno.
-      </p>
-      <div class="flex flex-col md:flex-row gap-5 mt-10">
-        <a
-          class="uppercase bg-white text-black font-bold rounded-xl px-4 py-3"
-          href="/register/patient"
-        >
-          Agenda tu cita
-        </a>
-
-        <a
-          class="uppercase border border-white text-white font-bold rounded-xl px-4 py-3"
-          href="/"
-        >
-          Contactanos
-        </a>
-      </div>
-    </div>
-
-    <div
-      class="w-full overflow-hidden lg:w-1/2 bg-[#00A19B] flex flex-col p-10 lg:max-h-96"
-    >
-      <p class="text-4xl font-semibold text-white py-2">Vacantes de empleo</p>
-      <p class="text-white">
-        Un artículo de economist.com publicado el 1 de julio de 2018 informó que
-        se espera que la cantidad de empleos en hospitales aumente un 16 %
-        durante la próxima década. Este es un ritmo más rápido que cualquier
-        otro tipo de trabajo. El uso de asistentes de escritura de IA ayudará a
-        los escritores de contenido a ser más eficientes en su trabajo,
-        especialmente cuando necesitan generar contenido para diferentes nichos
-        y temas.
-      </p>
       <div class="mt-10">
         <a
-          class="uppercase w-full md:w-auto bg-white text-black font-bold rounded-xl px-10 py-3"
-          href="/register/patient"
+          class="uppercase bg-[#20BC7E] text-white font-bold rounded-full py-4 px-10"
+          href="/cambiarruta"
         >
-          Más información
+          Saca tu cita
         </a>
       </div>
     </div>
-
-    <div class="w-full overflow-hidden lg:w-1/2 max-h-96">
-      <img
-        src="../src/assets/homeimg1.jpg"
-        alt="ImageHospitalHome2"
-        class="object-cover"
-      />
+    <div class="hidden lg:block">
+      <img src="../src/assets/doctor.png" alt="" class="object-cover" />
     </div>
-  </div>
-
-  <div
-    class="flex flex-col md:flex-row justify-center items-center max-w-screen-3xl mx-auto bg-[#71A7FF] md:p-20 p-10"
-  >
-    <div class="p-10 flex flex-col gap-5">
-      <p class="text-4xl font-bold text-white">
-        Registrate para recibir noticias y ofertas de empleo!
-      </p>
-      <p class="text-white">
-        Get notified about new jobs that match you, and let MyHospital know you
-        are interested.
-      </p>
+  </main>
+  <section class="px-3 mx-auto my-12 max-w-7xl h-screen">
+    <div class="flex flex-col justify-center text-center items-center">
+      <p class="text-[#FFB87A] font-bold text-lg my-3">Nuestros Servicios</p>
+      <h1 class="font-bold text-5xl">
+        MyHospital ofrece diferentes servicios para mejorar tu salud
+      </h1>
+      <hr class="bg-[#FFB87A] w-80 h-0.5 rounded-lg my-6" />
     </div>
-    <div class="p-10 flex flex-col gap-5 items-center">
-      <p class="text-xl text-center text-white">
-        Registrate como paciente para recibir beneficios exclusivos de los
-        usuarios de la pagina web:
-      </p>
-      <a
-        class="uppercase bg-white text-black font-bold rounded-xl px-4 py-3 w-full text-center"
-        href="/register/patient"
-      >
-        Registrarse
-      </a>
-    </div>
-  </div>
-  <div
-    class="flex flex-col lg:flex-row md:p-20 p-10 justify-center items-stretch gap-10"
-  >
-    <div class="rounded-lg lg:w-96 bg-base-100 shadow-xl w-full self-stretch">
-      <figure>
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-rows-1 ms:grid-rows-2 lg:grid-rows-3 gap-5 mx-auto h-10/12 w-10/12"
+    >
+      <div class="box ">
+        <img src="../src/assets/solid_user-doctor.svg" alt="" class="w-16" />
+        <h2 class="text-2xl font-bold my-2">Consultas</h2>
+        <p class="text-lg text-gray-400 p-2">
+          Contamos con un equipo de expertos médico especialista.
+        </p>
+      </div>
+      <div class="box ">
         <img
-          src="../src/assets/card1.jpg"
-          alt="Shoes"
-          class="rounded-t-lg w-full"
+          src="../src/assets/healthicons_neurology.svg"
+          alt=""
+          class="w-16"
         />
-      </figure>
-      <div class="p-10 flex flex-col gap-5">
-        <h2 class="text-lg font-semibold">
-          MyHospital cuenta con las mejores opciones para tu salud
-        </h2>
-        <div class="justify-end">
-          <a class="text-blue-500 underline">Más información</a>
-        </div>
+        <h2 class="text-2xl font-bold my-2">Diagnostico</h2>
+        <p class="text-lg text-gray-400 p-2">
+          Los mejores equipos para diagnosticarte.
+        </p>
+      </div>
+      <div class="box ">
+        <img src="../src/assets/fontisto_blood-drop.svg" alt="" class="w-16" />
+        <h2 class="text-2xl font-bold my-2">Patologia</h2>
+        <p class="text-lg text-gray-400 p-2">
+          Medicos especialistas en tu area de patologia.
+        </p>
+      </div>
+      <div class="box ">
+        <img
+          src="../src/assets/medical-icon_i-cardiology.svg"
+          alt=""
+          class="w-16"
+        />
+        <h2 class="text-2xl font-bold my-2">Cardiologia</h2>
+        <p class="text-lg text-gray-400 p-2">
+          Contamos con un equipo de expertos médico especialista.
+        </p>
+      </div>
+      <div class="box ">
+        <img
+          src="../src/assets/ri_medicine-bottle-fill.svg"
+          alt=""
+          class="w-16"
+        />
+        <h2 class="text-2xl font-bold my-2">Medicina</h2>
+        <p class="text-lg text-gray-400 p-2">
+          especialistas para sugerir las mejores medicinas.
+        </p>
+      </div>
+      <div class="box ">
+        <img
+          src="../src/assets/medical-icon_i-dental.svg"
+          alt=""
+          class="w-16"
+        />
+        <h2 class="text-2xl font-bold my-2">Odontologia</h2>
+        <p class="text-lg text-gray-400 p-2">
+          Nuestros equipos de odontologia estan altamente calificados.
+        </p>
       </div>
     </div>
-    <div class="rounded-lg lg:w-96 bg-base-100 shadow-xl w-full self-stretch">
-      <figure>
-        <img
-          src="../src/assets/card2.jpg"
-          alt="Shoes"
-          class="rounded-t-lg w-full"
-        />
-      </figure>
-      <div class="p-10 flex flex-col gap-5">
-        <h2 class="text-lg font-semibold">
-          Las instalaciones de MyHospital son muy seguras
-        </h2>
-        <div class="justify-end">
-          <a class="text-blue-500 underline">Más información</a>
-        </div>
-      </div>
-    </div>
-    <div class="rounded-lg lg:w-96 bg-base-100 shadow-xl w-full self-stretch">
-      <figure>
-        <img
-          src="../src/assets/card4.jpg"
-          alt="Shoes"
-          class="rounded-t-lg w-full"
-        />
-      </figure>
-      <div class="p-10 flex flex-col gap-5">
-        <h2 class="text-lg font-semibold">
-          Nuestros profesionales son los mejores en el sector
-        </h2>
-        <div class="justify-end">
-          <a class="text-blue-500 underline">Más información</a>
-        </div>
-      </div>
-    </div>
-    <div class="rounded-lg lg:w-96 bg-base-100 shadow-xl w-full self-stretch">
-      <figure>
-        <img
-          src="../src/assets/card3.jpg"
-          alt="Shoes"
-          class="rounded-t-lg w-full"
-        />
-      </figure>
-      <div class="p-10 flex flex-col gap-5">
-        <h2 class="text-lg font-semibold">Tu salud debe ser siempre primero</h2>
-        <div class="justify-end">
-          <a class="text-blue-500 underline">Más información</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <footer
-    class="flex flex-col md:flex-row p-20 bg-[#71A7FF]/20 justify-around items-center gap-10"
-  >
-    <div>
-      <p class="bg-blue-300 p-2 px-10 rounded-lg text-white font-semibold">
-        MyHospital
-      </p>
-    </div>
-    <div class="w-full md:w-auto">
-      <p class="text-2xl font-bold mb-5">Navigate</p>
-      <p>Home</p>
-      <p>Our solutions</p>
-      <p>Corporate carrers</p>
-      <p>News</p>
-    </div>
-    <div class="w-full md:w-auto">
-      <p class="text-2xl font-bold mb-5">Contactanos</p>
-      <p>3805 Edwards Road, Suite 700</p>
-      <p>Cincinnati, Ohio 45209</p>
-      <p>+1 (800) 580-8239</p>
-    </div>
-  </footer>
+  </section>
 </div>
+<Footer />

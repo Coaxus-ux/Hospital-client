@@ -1,4 +1,5 @@
 import { ENV_OBJ } from "../lib/env";
+
 export const userLogin = async (data) => {
   const response = fetch(`${ENV_OBJ.API_REST_URL}/user/login`, {
     method: "POST",
@@ -13,6 +14,7 @@ export const userLogin = async (data) => {
     });
   return response;
 };
+
 export const registerUser = async (data) => {
   function deleteVoids(jsonx) {
     for (var clave in jsonx) {
@@ -39,6 +41,7 @@ export const registerUser = async (data) => {
     });
   return response;
 };
+
 export const validateUser = async (token) => {
   const response = fetch(`${ENV_OBJ.API_REST_URL}/user/confirm/${token}`, {
     method: "GET",
@@ -53,18 +56,22 @@ export const validateUser = async (token) => {
     );
   return response;
 
-}
+};
+
 export const JWTValidator = async (jwtToken) => {
-  const response = fetch(`${ENV_OBJ.API_REST_URL}/user/JWTValidator/${jwtToken}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    }
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      return res;
-    }
-    );
-  return response;
-}
+  try {
+    const response = fetch(`${ENV_OBJ.API_REST_URL}/user/JWTValidator/${jwtToken}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }).then((res) => res.json())
+      .then((res) => {
+        return res;
+      }
+      );
+    return response;
+  }catch(error){
+    return error;
+  }
+};

@@ -26,7 +26,7 @@
       const response = await userLogin($User);
       if (response.hasOwnProperty("token")) {
         localStorage.setItem("user", JSON.stringify(response));
-        navigate("/"+response.userType);
+        navigate("/" + response.userType);
       } else if (response.msg === "User not confirmed") {
         Error.set({
           errorState: true,
