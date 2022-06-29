@@ -22,7 +22,7 @@
     const emailRegex = new RegExp(
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
-    if (emailRegex.test($User.email) && $User.password.length > 0) {
+    if (emailRegex.test($User.email) && $User.password.length > 6) {
       const response = await userLogin($User);
       if (response.hasOwnProperty("token")) {
         localStorage.setItem("user", JSON.stringify(response));
@@ -43,6 +43,11 @@
           errorMessage: "Correo o Contraseña incorrectos",
         });
       }
+    }else{
+      Error.set({
+        errorState: true,
+        errorMessage: "Datos incorrectos"
+      });
     }
     setTimeout(() => {
       Error.set({

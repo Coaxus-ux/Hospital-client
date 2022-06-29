@@ -14,7 +14,6 @@ export const userLogin = async (data) => {
     });
   return response;
 };
-
 export const registerUser = async (data) => {
   function deleteVoids(jsonx) {
     for (var clave in jsonx) {
@@ -41,7 +40,12 @@ export const registerUser = async (data) => {
     });
   return response;
 };
+export const passwordRecovery = async (data) => {
+  
+};
+export const newPassword = async (data) => {
 
+};
 export const validateUser = async (token) => {
   const response = fetch(`${ENV_OBJ.API_REST_URL}/user/confirm/${token}`, {
     method: "GET",
@@ -57,7 +61,6 @@ export const validateUser = async (token) => {
   return response;
 
 };
-
 export const JWTValidator = async (jwtToken) => {
   try {
     const response = fetch(`${ENV_OBJ.API_REST_URL}/user/JWTValidator/${jwtToken}`, {

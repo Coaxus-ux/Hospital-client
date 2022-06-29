@@ -1,7 +1,4 @@
-<body class="flex items-center justify-center w-screen h-screen p-10 space-x-6 bg-gray-300">
-
-	
-	<!-- Component Start -->
+<div class="flex items-center justify-center w-screen h-screen p-10 space-x-6 bg-gray-300">
 	<div class="flex flex-col items-center w-40 h-full overflow-hidden text-gray-400 bg-gray-900 rounded">
 		<a class="flex items-center w-full px-3 mt-3" href="#">
 			<svg class="w-8 h-8 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -65,5 +62,4 @@
 			<span class="ml-2 text-sm font-medium">Account</span>
 		</a>
 	</div>
-	<!-- Component End  -->
-</body>
+</div>
