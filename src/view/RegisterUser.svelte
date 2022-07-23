@@ -346,7 +346,7 @@
       class="mt-8 flex flex-col mx-auto  content-center justify-center w-8/12 text-black"
     >
       <button
-        class="bg-blue-300 drop-shadow-md duration-500 hover:bg-blue-400 font-semibold py-2 px-4  rounded focus:outline-none focus:shadow-outline"
+        class="bg-green-400 drop-shadow-md duration-500 hover:bg-green-600 font-semibold py-2 px-4  rounded focus:outline-none focus:shadow-outline"
         type="button"
         on:click={handleClick}
       >

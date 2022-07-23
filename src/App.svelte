@@ -4,30 +4,16 @@
   import RegisterMain from "./view/RegisterMain.svelte";
   import RegisterUser from "./view/RegisterUser.svelte";
   import ActivateAccount from "./view/activateAccount.svelte";
-  import Admin from "./view/Admin.svelte";
-  import Doctor from "./view/Doctor.svelte";
-  import Patient from "./view/Patient.svelte";
+
+  import DoctorPanel from "./view/DoctorPanel.svelte";
+  import PatientPanel from "./view/PatientPanel.svelte";
   import Home from "./view/Home.svelte";
-  import Error503 from "./view/Error503.svelte";
+  import AdminPanel from "./view/AdminPanel.svelte";
+  import AppointmentPanel from "./view/AppointmentPanel.svelte";
+  import PatientAdmin from "./view/PatientAdmin.svelte";
+  import SurgeryAdmin from "./view/SurgeryAdmin.svelte";
   import "./app.css";
-  import { ENV_OBJ } from "./lib/env";
-  const ping = async () => {
-    const xhttp = new XMLHttpRequest();
-    try {
-      xhttp.onreadystatechange = function () {
-        if (xhttp.readyState == 4 && xhttp.status == 0) {
-          navigate("/Error503");
-          
-        }else{
-          navigate("/");
-        }
-      };
-      xhttp.open("POST", `${ENV_OBJ.API_REST_URL}/user/login`, true);
-      xhttp.send();
-    } catch (e) {
-    }
-  };
-  //ping();
+ 
 </script>
 
 <div>
@@ -42,10 +28,12 @@
     <Route path="/activate-account/:token" let:params>
       <ActivateAccount token={params.token} />
     </Route>
-    <Route path="/admin"><Admin /></Route>
-    <Route path="/doctor"><Doctor /></Route>
-    <Route path="/patient"><Patient /></Route>
-    <Route path="/Error503"><Error503 /></Route>
+    <Route path="/doctor"><DoctorPanel /></Route>
+    <Route path="/patient"><PatientPanel /></Route>
+    <Route path="/admin"><AdminPanel /></Route>
+    <Route path="/appointment"><AppointmentPanel /></Route>
+    <Route path="/adminpatients"><PatientAdmin /></Route>
+    <Route path="/adminsurgerys"><SurgeryAdmin /></Route>
   </Router>
   
 </div>

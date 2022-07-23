@@ -92,7 +92,7 @@
           type="email"
           bind:value={$User.email}
           placeholder="ejemplo@mail.com"
-          class="focus:ring-blue-400 focus:ring-2 my-3 w-full bg-slate-50 h-10 p-2 rounded mt-0  border-slate-200 focus:outline-none"
+          class="focus:ring-green-400 focus:ring-2 my-3 w-full bg-green-50 h-10 p-2 rounded mt-0  border-green-200 focus:outline-none"
         />
       </div>
       <div class="w-full gap-2 flex flex-col justify-center">
@@ -107,14 +107,14 @@
           type="password"
           bind:value={$User.password}
           placeholder="Contraseña"
-          class="focus:ring-blue-400 focus:ring-2 my-3 w-full bg-slate-50 h-10 p-2 rounded mt-0  border-slate-200 focus:outline-none"
+          class="focus:ring-green-400 focus:ring-2 my-3 w-full bg-green-50 h-10 p-2 rounded mt-0  border-green-200 focus:outline-none"
         />
       </div>
     </form>
  
       <a
         href="/register"
-        class="text-sm text-blue-500 ml-auto hover:text-blue-600"
+        class="text-sm text-green-500 ml-auto hover:text-blue-600"
         >Olvidé mi Contraseña</a
       >
  
@@ -122,14 +122,14 @@
       class="flex flex-col mx-auto  content-center justify-center w-8/12 text-black mt-5"
     >
       <button
-        class="bg-blue-300 drop-shadow-md duration-500 hover:bg-blue-400 font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        class="bg-green-400 duration-500 hover:bg-green-600 font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         type="button"
         on:click={handleClick}
       >
         Iniciar sesión
       </button>
       <a
-        class="my-3 bg-gray-300 drop-shadow-md duration-500 hover:bg-gray-400 font-semibold py-2 px-4 text-center hover:text-black hover:no-underline rounded focus:outline-none focus:shadow-outline"
+        class="my-3 bg-gray-300 duration-500 hover:bg-gray-400 font-semibold py-2 px-4 text-center hover:text-black hover:no-underline rounded focus:outline-none focus:shadow-outline"
         href="/register"
       >
         Registrarme
