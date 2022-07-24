@@ -2,13 +2,14 @@
   import { onMount, getContext } from "svelte";
   import { writable } from "svelte/store";
   import Header from "../lib/Header.svelte";
-  import Popup from "../lib/Popup.svelte";
   import Modal, { bind } from "svelte-simple-modal";
   import Patient from "../lib/PatientModal.svelte";
   import { getAppointment } from "../store/Appointments.js";
+  import { getDoctorsById } from "../store/Utils.js";
   const modal = writable(null);
 
   const appointments = writable([]);
+  const doctors = writable([]);
   const showModal = () =>
     modal.set(
       bind(Patient, {
@@ -22,9 +23,8 @@
   onMount(async () => {
     const appointmentResult = await getAppointment();
     appointments.set(appointmentResult.result);
-    console.log(appointmentResult.result);
+    console.log($appointments)
   });
-  
 </script>
 
 <Modal
@@ -64,9 +64,9 @@
           {#each $appointments as appointment}
             <tr>
               <th class="text-center">1</th>
-              <td class="text-center">appointment.patient</td>
-              <td class="text-center">Quality Control Specialist</td>
-
+              <td class="text-center">{appointment.patient}</td>
+              <td class="text-center">{appointment.doctor} </td>
+              
               <td class="text-center">{appointment.date}</td>
               <td class="text-center">{appointment.state}</td>
               <td class="text-center">

@@ -58,3 +58,20 @@ export const getDepartments = async (data) => {
     });
   return response;
 }
+export const getDoctorsById = async (data) => {
+
+  const response = fetch(`${ENV_OBJ.API_REST_URL}/doctor/get-doctor`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: data,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      return res;
+    });
+  return response;
+}

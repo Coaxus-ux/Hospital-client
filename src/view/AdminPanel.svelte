@@ -13,7 +13,7 @@
   <div class="flex flex-col gap-10 justify-center items-center p-20 bg-base-200/50">
     
     <div class="flex justify-evenly flex-wrap">
-      <button class="card w-56 bg-white text-neutral-content shadow-xl hover:bg-green-500 transition duration-300 m-4">
+      <a class="card w-56 bg-white text-neutral-content shadow-xl hover:bg-green-500 transition duration-300 m-4" href="/appointment">
         <div
           class="card-body items-center text-center text-black flex flex-row "
         >
@@ -32,7 +32,7 @@
           </svg>
           Crear Nueva cita
         </div>
-      </button>
+      </a>
       <button class="card w-56 bg-white text-neutral-content shadow-xl hover:bg-green-500 transition duration-300 m-4">
         <div
           class="card-body items-center text-center text-black flex flex-row "
