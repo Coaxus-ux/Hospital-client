@@ -113,7 +113,7 @@
     </form>
  
       <a
-        href="/register"
+        href="/password-recovery"
         class="text-sm text-green-500 ml-auto hover:text-blue-600"
         >Olvidé mi Contraseña</a
       >

@@ -3,7 +3,7 @@
   import Login from "./view/Login.svelte";
   import RegisterMain from "./view/RegisterMain.svelte";
   import RegisterUser from "./view/RegisterUser.svelte";
-  import ActivateAccount from "./view/activateAccount.svelte";
+  import ActivateAccount from "./view/ActivateAccount.svelte";
 
   import DoctorPanel from "./view/DoctorPanel.svelte";
   import PatientPanel from "./view/PatientPanel.svelte";
@@ -12,6 +12,9 @@
   import AppointmentPanel from "./view/AppointmentPanel.svelte";
   import PatientAdmin from "./view/PatientAdmin.svelte";
   import SurgeryAdmin from "./view/SurgeryAdmin.svelte";
+  import PasswordRecovery from "./view/PasswordRecovery.svelte";
+  import NewPassword from "./view/NewPassword.svelte";
+  import ClinicHistory from "./view/ClinicHistory.svelte";
   import "./app.css";
  
 </script>
@@ -34,6 +37,9 @@
     <Route path="/appointment"><AppointmentPanel /></Route>
     <Route path="/adminpatients"><PatientAdmin /></Route>
     <Route path="/adminsurgerys"><SurgeryAdmin /></Route>
+    <Route path="/password-recovery"><PasswordRecovery /></Route>
+    <Route path="/new-password/:emailtoken" let:params><NewPassword emailtoken={params.emailtoken} /></Route>
+    <Route path="/clinic-history"><ClinicHistory /></Route>
   </Router>
   
 </div>
