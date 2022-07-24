@@ -14,7 +14,7 @@ import { onMount } from "svelte";
   
   const onClick = () => {
     const doc = new jsPDF('p', 'pt', 'a4');
-    let margin = (doc.internal.pageSize.width - 100) / 2;
+    let margin = 40;
     let scale = 0.5;
     doc.html(document.getElementById("clinicHistory"),{
       x: margin,
@@ -30,7 +30,9 @@ import { onMount } from "svelte";
 
 <div class="max-w-3xl m-auto">
   <div class="overflow-x-auto">
+    <h1>MYHOSPITAL</h1>
     <table class="table w-full" id="clinicHistory">
+  
       <!-- head -->
       <thead>
         <tr>
