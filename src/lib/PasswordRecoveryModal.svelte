@@ -44,22 +44,7 @@
       }, 2000);
     }
   };
-  const handleChangePassword = (e) => {
-    if($password.password.length < 6){
-      error.set({
-        status: true,
-        message: "la contraseña debe tener al menos 6 caracteres",
-      });
-      return;
-    }
-    if($password.password !== $password.confirmPassword){
-      error.set({
-        status: true,
-        message: "las contraseñas no coinciden",
-      });
-      return;
-    }
-  };
+  
 </script>
 
   <div>

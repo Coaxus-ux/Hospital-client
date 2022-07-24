@@ -14,6 +14,7 @@
   import SurgeryAdmin from "./view/SurgeryAdmin.svelte";
   import PasswordRecovery from "./view/PasswordRecovery.svelte";
   import NewPassword from "./view/NewPassword.svelte";
+  import ClinicHistory from "./view/ClinicHistory.svelte";
   import "./app.css";
  
 </script>
@@ -38,6 +39,7 @@
     <Route path="/adminsurgerys"><SurgeryAdmin /></Route>
     <Route path="/password-recovery"><PasswordRecovery /></Route>
     <Route path="/new-password/:emailtoken" let:params><NewPassword emailtoken={params.emailtoken} /></Route>
+    <Route path="/clinic-history"><ClinicHistory /></Route>
   </Router>
   
 </div>

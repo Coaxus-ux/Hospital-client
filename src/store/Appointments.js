@@ -42,3 +42,19 @@ export const createAppointment = async (data) => {
     });
   return response;
 }
+export const getAppointmentData = async (data) => {
+  const response = fetch(`${ENV_OBJ.API_REST_URL}/appointmentData/getAppointmentData`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      patientId: "62a9c81d1bda3da3efbb2e4e"
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      return res;
+    });
+  return response;
+}
