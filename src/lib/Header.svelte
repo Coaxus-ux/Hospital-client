@@ -121,7 +121,7 @@
        
      
     </div>
-    <a href="/">
+    <a href="#">
       <p class="bg-[#20BC7E] p-2 px-10 text-white font-semibold rounded-lg">
         MyHospital
       </p>
