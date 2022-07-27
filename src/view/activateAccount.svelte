@@ -25,7 +25,6 @@
         route: "/register"
       });
     }
-    console.log();
     const showModal = () =>
         modal.set(
           bind(Popup, {

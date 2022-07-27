@@ -1,4 +1,5 @@
 import { ENV_OBJ } from "../lib/env";
+
 export const userLogin = async (data) => {
   const response = fetch(`${ENV_OBJ.API_REST_URL}/user/login`, {
     method: "POST",
@@ -39,32 +40,72 @@ export const registerUser = async (data) => {
     });
   return response;
 };
+export const passwordRecovery = async (data) => {
+  console.log(data);
+  const response = fetch(`${ENV_OBJ.API_REST_URL}/user/passwordRecovery`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: data
+    })
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      return res;
+    });
+  return response;
+};
+
+export const newPassword = async (token, password) => {
+  
+  const response = fetch(`${ENV_OBJ.API_REST_URL}/user/newPassword`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      token: token,
+      password: password,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      return res;
+    });
+  return response;
+};
 export const validateUser = async (token) => {
   const response = fetch(`${ENV_OBJ.API_REST_URL}/user/confirm/${token}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-    }
+    },
   })
     .then((res) => res.json())
     .then((res) => {
       return res;
-    }
-    );
+    });
   return response;
-
-}
+};
 export const JWTValidator = async (jwtToken) => {
-  const response = fetch(`${ENV_OBJ.API_REST_URL}/user/JWTValidator/${jwtToken}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    }
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      return res;
-    }
-    );
-  return response;
-}
+  try {
+    const response = fetch(
+      `${ENV_OBJ.API_REST_URL}/user/JWTValidator/${jwtToken}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        return res;
+      });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};

@@ -22,25 +22,25 @@
       class="flex gap-3 flex-col mx-auto content-center justify-center w-8/12 text-black"
     >
       <a
-        class="bg-blue-300 text-lg drop-shadow-md duration-500 hover:bg-blue-400 font-normal py-2 px-4 text-center hover:text-black hover:no-underline rounded focus:outline-none focus:shadow-outline"
+        class="bg-green-400 text-lg drop-shadow-md duration-500 hover:bg-green-600 font-normal py-2 px-4 text-center hover:text-black hover:no-underline rounded focus:outline-none focus:shadow-outline"
         href="/register/admin"
       >
         Administrador
       </a>
       <a
-        class="bg-blue-300 text-lg drop-shadow-md duration-500 hover:bg-blue-400 font-normal py-2 px-4 text-center hover:text-black hover:no-underline rounded focus:outline-none focus:shadow-outline"
+        class="mainButtons"
         href="/register/doctor"
       >
         Medico
       </a>
       <a
-        class="bg-blue-300 text-lg drop-shadow-md duration-500 hover:bg-blue-400 font-normal py-2 px-4 text-center hover:text-black  hover:no-underline rounded focus:outline-none focus:shadow-outline"
+        class="mainButtons"
         href="/register/patient"
       >
         Paciente
       </a>
       <a
-        class="my-2 bg-gray-300 drop-shadow-md duration-500 hover:bg-gray-400 font-semibold py-2 px-5 text-center hover:text-black hover:no-underline rounded focus:outline-none focus:shadow-outline"
+        class="my-2 bg-gray-300 drop-shadow-md duration-500 hover:bg-gray-400 font-semibold py-2 px-4 text-center hover:text-black hover:no-underline rounded focus:outline-none focus:shadow-outline"
         href="/login"
       >
         Volver
