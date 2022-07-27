@@ -45,8 +45,8 @@ export const createAppointment = async (data) => {
     });
   return response;
 };
-
 export const getAppointmentByDoctor = async (data) => {
+  console.log(data);
   const response = fetch(
     `${ENV_OBJ.API_REST_URL}/appointment/getDoctorAppointments`,
     {
@@ -57,15 +57,20 @@ export const getAppointmentByDoctor = async (data) => {
       body: JSON.stringify(data),
     }
   )
+    .then((res) => res.json())
+    .then((res) => {
+      return res;
+    });
+  return response;
 }
-export const getAppointmentData = async (data) => {
+export const getAppointmentData = async (patientId) => {
   const response = fetch(`${ENV_OBJ.API_REST_URL}/appointmentData/getAppointmentData`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      patientId: "62a9c81d1bda3da3efbb2e4e"
+      patientId: patientId,
     }),
   })
     .then((res) => res.json())
@@ -74,7 +79,6 @@ export const getAppointmentData = async (data) => {
     });
   return response;
 };
-
 export const getAppointmentByuser = async (data) => {
   const response = fetch(
     `${ENV_OBJ.API_REST_URL}/appointment/getAppointmentByuser`,
@@ -92,4 +96,54 @@ export const getAppointmentByuser = async (data) => {
     });
   return response;
 };
-
+export const cancelAppointment = async (id) => {
+  const response = fetch(`${ENV_OBJ.API_REST_URL}/appointment/cancelAppointment`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: id,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      return res;
+    });
+  return response;
+};
+export const createAppointmentReport = async (data) => {
+  const response = fetch(`${ENV_OBJ.API_REST_URL}/appointmentData/create-appointmentData`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      patientId: data.patientId,
+      doctorId: data.doctorId,
+      recomendations: data.recomendations,
+      medicine: data.medicines,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      return res;
+    });
+  return response;
+}
+export const putAppointmentReady = async (data) => {
+  const response = fetch(`${ENV_OBJ.API_REST_URL}/appointment/putAppointmentReady`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: data,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      return res;
+    });
+  return response;
+}

@@ -40,6 +40,7 @@
   <Header />
   <div class="p-20 flex flex-col gap-10">
     <div class="flex flex-wrap justify-around">
+      <a class="btn btn-warning" href="/admin">Volver</a>
       <h1 class="text-5xl font-bold">Citas disponibles</h1>
       <button on:click={OnHandleClick} class="btn btn-success"
         >Agregar cita</button
@@ -47,7 +48,6 @@
     </div>
     <div class="overflow-x-auto shadow rounded-lg">
       <table class="table w-full">
-        <!-- head -->
         <thead>
           <tr class="text-center">
             <th />

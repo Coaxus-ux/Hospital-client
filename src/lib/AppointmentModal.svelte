@@ -3,11 +3,12 @@
   import { writable } from "svelte/store";
   import { navigate } from "svelte-routing";
   export let message = {};
-  export let route = "";
   import { getDoctors, getSurgeries, getDepartments } from "../store/Utils.js";
   import { createAppointment } from "../store/Appointments.js";
   const { close } = getContext("simple-modal");
   const selectConsultorium = document.getElementById("selectConsultorium");
+
+  const user = writable(JSON.parse(window.localStorage.getItem("user")));
   const handleClose = () => {
     close();
   };
@@ -33,7 +34,6 @@
     const doctorResult = await getDoctors();
     const surgeryResult = await getSurgeries();
     const departmentsResult = await getDepartments();
-
     doctors.set(doctorResult.result);
     surgeries.set(surgeryResult.result);
     departments.set(departmentsResult.result);
@@ -82,10 +82,16 @@
   >
     <h1 class="text-3xl font-bold">Agendar cita</h1>
     <select class="select select-bordered w-full" name="doctorId">
-      <option disabled selected>Doctor</option>
+      
+      {#if $user.userType === "doctor"}
+      <option selected value={$user._id}>{$user.name}</option>
+      {:else}
       {#each $doctors as doctor}
-        <option value={doctor._id}>{doctor.name}</option>
+      <option disabled selected>Doctor</option>
+        <option value={doctor._id}>{doctor.name + doctor.lastName}</option>
       {/each}
+      {/if}
+      
     </select>
     <input
       class="input input-bordered w-full"

@@ -2,39 +2,125 @@
   import { onMount } from "svelte";
 
   import { writable } from "svelte/store";
-
-  /* import { onMount } from "svelte";
+  import { updateDoctor } from "../store/Users.js";
+  import CreateSurgery from "../lib/CreateSurgery.svelte";
+  import AddMedicine from "../lib/AddMedicine.svelte";
+  import EditMedicine from "../lib/EditMedicine.svelte";
     import { loggedValidator} from "../lib/loggedValidator";
     onMount(async () => {
       await loggedValidator();
-    }); */
+    });
   import Header from "../lib/Header.svelte";
 
-  import { getDoctors, getSurgeries, getMedicines } from "../store/Utils";
+  import {
+    getDoctors,
+    getSurgeries,
+    getMedicines,
+    updateSurgery,
+  } from "../store/Utils";
   import { getAppointment } from "../store/Appointments";
-
+  import Modal, { bind } from "svelte-simple-modal";
+  const modal = writable(null);
+  const AddMedicineModal = writable(null);
+  const EditMedicineModal = writable(null);
   const doctors = writable([]);
   const surgerys = writable([]);
   const medicines = writable([]);
   const appointments = writable([]);
 
   onMount(async () => {
-    const doctorResults = await getDoctors();
-    doctors.set(doctorResults.result);
-    const surgerysResults = await getSurgeries();
-    surgerys.set(surgerysResults.result);
-    const medicinesResults = await getMedicines();
-    medicines.set(medicinesResults.result);
     const appointmentsResults = await getAppointment();
     appointments.set(appointmentsResults.result);
-
-    console.log($appointments);
   });
+  const getMedicine = async (id) => {
+    const medicinesResults = await getMedicines();
+    medicines.set(medicinesResults.result);
+  };
+  const getDoctor = async (id) => {
+    const doctorResults = await getDoctors();
+    doctors.set(doctorResults.result);
+  };
+  const getSurgerie = async () => {
+    const surgerysResults = await getSurgeries();
+    surgerys.set(surgerysResults.result);
+  };
+  const showModal = () => {
+    modal.set(
+      bind(CreateSurgery, {
+        message: "",
+      })
+    );
+  };
+  const showAddMedicineModal = () => {
+    AddMedicineModal.set(
+      bind(AddMedicine, {
+        message: "",
+      })
+    );
+  };
+  const showEditMedicineModal = (medicine) => {
+    EditMedicineModal.set(
+      bind(EditMedicine, {
+        message: medicine,
+      })
+    );
+  };
+  const changeStateDoctor = async (doctor) => {
+    doctor.isActive = !doctor.isActive;
+    const result = await updateDoctor(doctor);
+    console.log(result);
+    getDoctor();
+  };
+  const changeStateSurgery = async (surgery) => {
+    surgery.status = !surgery.status;
+    const result = await updateSurgery(surgery);
+
+    getSurgerie();
+  };
+  const createSurgery = async (surgery) => {
+    await showModal();
+  };
+  const getNewSurgerie = async (surgery) => {
+    getSurgerie();
+  };
+  const getNewMedicine = async (medicine) => {
+    getMedicine();
+  };
+
+  getDoctor();
+  getSurgerie();
+  getMedicine();
 </script>
 
+<Modal
+  closeOnOuterClick={true}
+  closeButton={true}
+  show={$modal}
+  styleWindow={{
+    boxShadow: "0 2px 5px 0 rgba(0, 0, 0, 0.15 )",
+    backgroundColor: "rgb(241, 245, 249)",
+  }}
+/>
+<Modal
+  closeOnOuterClick={true}
+  closeButton={true}
+  show={$AddMedicineModal}
+  styleWindow={{
+    boxShadow: "0 2px 5px 0 rgba(0, 0, 0, 0.15 )",
+    backgroundColor: "rgb(241, 245, 249)",
+  }}
+/>
+<Modal
+  closeOnOuterClick={true}
+  closeButton={true}
+  show={$EditMedicineModal}
+  styleWindow={{
+    boxShadow: "0 2px 5px 0 rgba(0, 0, 0, 0.15 )",
+    backgroundColor: "rgb(241, 245, 249)",
+  }}
+/>
 <div>
   <Header />
-
   <div
     class="flex flex-col gap-10 justify-center items-center p-20 bg-base-200/50"
   >
@@ -62,7 +148,10 @@
           Crear Nueva cita
         </div>
       </a>
-      <a href="/register/patient" class="card w-56 bg-white text-neutral-content shadow-xl hover:bg-green-500 transition duration-300 m-4">
+      <a
+        href="/register/patient"
+        class="card w-56 bg-white text-neutral-content shadow-xl hover:bg-green-500 transition duration-300 m-4"
+      >
         <div
           class="card-body items-center text-center text-black flex flex-row "
         >
@@ -82,41 +171,54 @@
           Agregar Paciente
         </div>
       </a>
-      <button class="card w-56 bg-white text-neutral-content shadow-xl hover:bg-green-500 transition duration-300 m-4">
-        <div
-          class="card-body items-center text-center text-black flex flex-row "
-        >
-        <svg fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
-            <path xmlns="http://www.w3.org/2000/svg" d="M11.3356 2.25259C11.7145 1.9158 12.2855 1.9158 12.6644 2.25259L21.6644 10.2526C22.0772 10.6195 22.1143 11.2516 21.7474 11.6644C21.3805 12.0771 20.7484 12.1143 20.3356 11.7474L20 11.4491V19C20 20.1046 19.1046 21 18 21H6.00001C4.89544 21 4.00001 20.1046 4.00001 19V11.4491L3.66437 11.7474C3.25159 12.1143 2.61952 12.0771 2.2526 11.6644C1.88568 11.2516 1.92286 10.6195 2.33565 10.2526L11.3356 2.25259ZM6.00001 9.67129V19H9.00001V14C9.00001 13.4477 9.44773 13 10 13H14C14.5523 13 15 13.4477 15 14V19H18V9.67129L12 4.33795L6.00001 9.67129ZM13 19V15H11V19H13Z" fill="#0D0D0D"></path>
-            </svg>
-          Crear consultorio
-        </div>
-      </button>
-      <button
+      <div
         class="card w-56 bg-white text-neutral-content shadow-xl hover:bg-green-500 transition duration-300 m-4"
       >
-        <div
-          class="card-body items-center text-center text-black flex flex-row "
+        <button
+          class="card-body items-center text-center text-black flex flex-row"
+          on:click={createSurgery}
         >
-        <svg fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
-            <path xmlns="http://www.w3.org/2000/svg" d="M11.3356 2.25259C11.7145 1.9158 12.2855 1.9158 12.6644 2.25259L21.6644 10.2526C22.0772 10.6195 22.1143 11.2516 21.7474 11.6644C21.3805 12.0771 20.7484 12.1143 20.3356 11.7474L20 11.4491V19C20 20.1046 19.1046 21 18 21H6.00001C4.89544 21 4.00001 20.1046 4.00001 19V11.4491L3.66437 11.7474C3.25159 12.1143 2.61952 12.0771 2.2526 11.6644C1.88568 11.2516 1.92286 10.6195 2.33565 10.2526L11.3356 2.25259ZM6.00001 9.67129V19H9.00001V14C9.00001 13.4477 9.44773 13 10 13H14C14.5523 13 15 13.4477 15 14V19H18V9.67129L12 4.33795L6.00001 9.67129ZM13 19V15H11V19H13Z" fill="#0D0D0D"></path>
-            </svg>
-          Generar hisotria clinica
-        </div>
-      </button>
+          <svg
+            fill="none"
+            viewBox="0 0 24 24"
+            height="24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              xmlns="http://www.w3.org/2000/svg"
+              d="M11.3356 2.25259C11.7145 1.9158 12.2855 1.9158 12.6644 2.25259L21.6644 10.2526C22.0772 10.6195 22.1143 11.2516 21.7474 11.6644C21.3805 12.0771 20.7484 12.1143 20.3356 11.7474L20 11.4491V19C20 20.1046 19.1046 21 18 21H6.00001C4.89544 21 4.00001 20.1046 4.00001 19V11.4491L3.66437 11.7474C3.25159 12.1143 2.61952 12.0771 2.2526 11.6644C1.88568 11.2516 1.92286 10.6195 2.33565 10.2526L11.3356 2.25259ZM6.00001 9.67129V19H9.00001V14C9.00001 13.4477 9.44773 13 10 13H14C14.5523 13 15 13.4477 15 14V19H18V9.67129L12 4.33795L6.00001 9.67129ZM13 19V15H11V19H13Z"
+              fill="#0D0D0D"
+            />
+          </svg>
+          Crear consultorio
+        </button>
+      </div>
+      <div
+        class="card w-56 bg-white text-neutral-content shadow-xl hover:bg-green-500 transition duration-300 m-4"
+      >
+        <button
+          class="card-body items-center text-center text-black flex flex-row"
+          on:click={showAddMedicineModal}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            id="Outline"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            ><path
+              d="M23,11H13V1a1,1,0,0,0-1-1h0a1,1,0,0,0-1,1V11H1a1,1,0,0,0-1,1H0a1,1,0,0,0,1,1H11V23a1,1,0,0,0,1,1h0a1,1,0,0,0,1-1V13H23a1,1,0,0,0,1-1h0A1,1,0,0,0,23,11Z"
+            /></svg>
+
+          Agregar medicina
+        </button>
+      </div>
     </div>
 
     <div class="card w-full bg-white shadow-xl ">
       <div class="card-body">
         <h2 class="card-title">Doctores disponibles</h2>
-        <div class="flex w-1/2">
-          <p>
-            Ultima actualización hace 1 hora <button
-              class="ml-2 bg-[#F6F8FB] rounded-xl px-2 border-2 border-[#DBDDE0] text-[#20BC7E] font-semibold"
-              >Actualizar información</button
-            >
-          </p>
-        </div>
         <div class="overflow-x-auto">
           <table class="table w-full">
             <!-- head -->
@@ -126,8 +228,8 @@
                 <th>Apellido</th>
                 <th>Cedula</th>
                 <th>numero profesional</th>
-                <th>Especialidad</th>
                 <th>Estado</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -138,8 +240,19 @@
                   <td>{doctor.lastName}</td>
                   <td>{doctor.citizenshipCard}</td>
                   <td>{doctor.emploeeId}</td>
-                  <td>{doctor.userType}</td>
-                  <td>{doctor.isActive}</td>
+                  <td
+                    >{doctor.isActive === true
+                      ? "En servicio"
+                      : "Fuera de servicio"}</td
+                  >
+                  <td>
+                    <button
+                      class=" btn btn-accent"
+                      on:click={changeStateDoctor(doctor)}
+                    >
+                      {doctor.isActive === false ? "Activar" : "Desactivar"}
+                    </button>
+                  </td>
                 </tr>
               {/each}
             </tbody>
@@ -152,16 +265,26 @@
       <div class="card bg-base-100 shadow-xl flex-1">
         <div class="card-body">
           <h2 class="card-title">Consultorios disponibles</h2>
+          <div class="flex w-1/2 mb-5">
+            <p>
+              <button
+                on:click={getNewSurgerie}
+                class="ml-2 bg-[#F6F8FB] rounded-xl px-2 border-2 border-[#DBDDE0] text-[#20BC7E] font-semibold"
+                >Actualizar información</button
+              >
+            </p>
+          </div>
           <div>
             <div class="overflow-x-auto">
               <table class="table w-full">
                 <!-- head -->
                 <thead>
                   <tr>
-                    <th>Nombre consultorio</th>
+                    <th>Nombre</th>
                     <th>Departamento</th>
                     <th>Ciudad</th>
                     <th>Status</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -169,9 +292,19 @@
                   {#each $surgerys as surgery}
                     <tr>
                       <td>{surgery.surgeryName}</td>
-                      <td>{surgery.departmentId}</td>
+                      <td>{surgery.departmentName}</td>
                       <td>{surgery.city}</td>
-                      <td>{surgery.status}</td>
+                      <td
+                        >{surgery.status === true
+                          ? "Disponible"
+                          : "Fuera de servicio"}</td
+                      >
+                      <button
+                        class=" btn btn-accent"
+                        on:click={changeStateSurgery(surgery)}
+                      >
+                        {surgery.status === false ? "Activar" : "Desactivar"}
+                      </button>
                     </tr>
                   {/each}
                 </tbody>
@@ -184,6 +317,15 @@
       <div class="card bg-base-100 shadow-xl flex-1">
         <div class="card-body">
           <h2 class="card-title">Medicamentos disponibles</h2>
+          <div class="flex w-1/2 mb-5">
+            <p>
+              <button
+                on:click={getNewMedicine}
+                class="ml-2 bg-[#F6F8FB] rounded-xl px-2 border-2 border-[#DBDDE0] text-[#20BC7E] font-semibold"
+                >Actualizar información</button
+              >
+            </p>
+          </div>
           <div>
             <div class="overflow-x-auto">
               <table class="table w-full">
@@ -193,6 +335,7 @@
                     <th>Nombre medicamento</th>
                     <th>Tipo</th>
                     <th>Descripción</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -202,6 +345,12 @@
                       <td>{medicine.medicineName}</td>
                       <td>{medicine.medicineType}</td>
                       <td>{medicine.medicineDescription}</td>
+                      <button
+                      on:click={showEditMedicineModal(medicine)}
+                        class=" btn btn-warning"
+                        
+                      > Editar </button>
+
                     </tr>
                   {/each}
                 </tbody>
@@ -231,7 +380,7 @@
                 {#each $appointments as appointment}
                   <tr>
                     <td>{appointment.patient}</td>
-                    <td>{appointment.patientId}</td>
+                    <td>{appointment.patientCitizenshipCard}</td>
                     <td>{appointment.doctor}</td>
                     <td
                       >{new Date(

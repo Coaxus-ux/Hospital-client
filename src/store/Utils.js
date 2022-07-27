@@ -92,3 +92,60 @@ export const getMedicines = async (data) => {
     });
   return response;
 };
+export const updateSurgery = async (data) => {
+  const response = fetch(`${ENV_OBJ.API_REST_URL}/surgery/update-surgery`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      return res;
+    });
+  return response;
+}
+export const createSurgery = async (data) => {
+  console.log(data);
+  const response = fetch(`${ENV_OBJ.API_REST_URL}/surgery/create-surgery`, {
+      method: "POST",
+      headers: {
+      "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+  })
+      .then((res) => res.json())
+      .then((res) => {
+      return res;
+      });
+  return response;
+}
+export const addMedicine = async (data) => {
+  const response = fetch(`${ENV_OBJ.API_REST_URL}/medicine/create-medicine`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      return res;
+    });
+  return response;
+}
+export const updateMedicine = async (data) => {
+  const response = fetch(`${ENV_OBJ.API_REST_URL}/medicine/update-medicine`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      return res;
+    });
+  return response;
+}
